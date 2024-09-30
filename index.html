@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Dad!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 1s ease;
+        }
+        #initial-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        #typewriter {
+            font-size: 2em;
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            display: none;
+            text-align: center;
+        }
+        #see-memories-btn {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #see-memories-btn.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="initial-screen">
+        <button id="start-btn">Click Here</button>
+    </div>
+    <div id="typewriter" class="hidden"></div>
+    
+    <div class="container">
+        <h1>Happy Birthday, Dad!</h1>
+        <button id="see-memories-btn" onclick="showOverlay()">See Memories</button>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <button class="close-btn" onclick="closeOverlay()">x</button>
+
+        <!-- YouTube player without autoplay initially -->
+        <iframe id="ytplayer" type="text/html" width="0" height="0"
+          src="https://www.youtube.com/embed/dxWNCheVR1A?controls=0"
+          frameborder="0"></iframe>
+
+        <div class="carousel-container top-carousel">
+            <div class="carousel" id="carouselTop">
+                <img src="photo1.jpg" alt="Memory 1">
+                <img src="photo2.jpg" alt="Memory 2">
+                <img src="photo3.jpg" alt="Memory 3">
+                <img src="photo4.jpg" alt="Memory 4">
+            </div>
+        </div>
+
+        <div class="center-text">
+            <h2>The bestestestest dad ever!</h2>
+        </div>
+
+        <div class="carousel-container bottom-carousel">
+            <div class="carousel" id="carouselBottom">
+                <img src="photo5.jpg" alt="Memory 5">
+                <img src="photo6.jpg" alt="Memory 6">
+                <img src="photo7.jpg" alt="Memory 7">
+                <img src="photo8.jpg" alt="Memory 8">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialScreen = document.getElementById('initial-screen');
+        const startBtn = document.getElementById('start-btn');
+        const typewriter = document.getElementById('typewriter');
+        const container = document.querySelector('.container');
+        const seeMemoriesBtn = document.getElementById('see-memories-btn');
+
+        const messages = [
+            "Oh, you clicked!",
+            "Let's take a trip down memory lane...",
+            "A trip showing...",
+            "The best dad ever"
+        ];
+
+        let currentMessageIndex = 0;
+
+        startBtn.onclick = () => {
+            initialScreen.style.display = 'none';
+            startTypewriterEffect(messages[currentMessageIndex]);
+            
+            // Play the music when the button is clicked
+            document.getElementById('ytplayer').src += "&autoplay=1";
+        };
+
+        function startTypewriterEffect(message) {
+            let i = 0;
+            typewriter.innerHTML = '';
+            typewriter.classList.remove('hidden');
+
+            const typeInterval = setInterval(() => {
+                if (i < message.length) {
+                    typewriter.innerHTML += message.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        deleteText(message);
+                    }, 2000);
+                }
+            }, 150);
+        }
+
+        function deleteText(message) {
+            let i = message.length - 1;
+
+            const deleteInterval = setInterval(() => {
+                if (i >= 0) {
+                    typewriter.innerHTML = message.substring(0, i);
+                    i--;
+                } else {
+                    clearInterval(deleteInterval);
+                    currentMessageIndex++;
+                    if (currentMessageIndex < messages.length) {
+                        setTimeout(() => {
+                            startTypewriterEffect(messages[currentMessageIndex]);
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            typewriter.style.transition = 'opacity 1s ease-in-out';
+                            typewriter.style.opacity = '0';
+                            setTimeout(() => {
+                                typewriter.classList.add('hidden');
+                                showContent();
+                            }, 1000);
+                        }, 500);
+                    }
+                }
+            }, 100);
+        }
+
+        function showContent() {
+            container.style.display = 'block';
+            document.body.style.backgroundColor = 'white';
+            setTimeout(() => {
+                seeMemoriesBtn.classList.add('visible');
+            }, 1500); // Delay before the "See Memories" button fades in
+        }
+
+        function showOverlay() {
+            document.getElementById('overlay').style.display = 'flex';
+            startCarousel();
+        }
+
+        function closeOverlay() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('ytplayer').src = "https://www.youtube.com/embed/dxWNCheVR1A";
+        }
+
+        const carouselTop = document.getElementById('carouselTop');
+        const carouselBottom = document.getElementById('carouselBottom');
+        let topScroll = 0;
+        let bottomScroll = 0;
+
+        function startCarousel() {
+            setInterval(() => {
+                topScroll -= 0.3;
+                if (topScroll <= -carouselTop.scrollWidth) {
+                    topScroll = window.innerWidth;
+                }
+                carouselTop.style.transform = `translateX(${topScroll}px)`;
+
+                bottomScroll += 0.3;
+                if (bottomScroll >= window.innerWidth) {
+                    bottomScroll = -carouselBottom.scrollWidth;
+                }
+                carouselBottom.style.transform = `translateX(${bottomScroll}px)`;
+            }, 10);
+        }
+    </script>
+</body>
+</html>

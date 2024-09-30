@@ -1,0 +1,168 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f06, #ffcc00);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.container {
+    text-align: center;
+    color: white;
+}
+h1 {
+    font-size: 4em;
+    animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #f06;
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);  /* Darker dim effect */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 1s ease-in-out;
+    z-index: 1000;  /* Ensure overlay is above other elements */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel {
+    display: flex;
+    width: fit-content;
+}
+
+.carousel img {
+    width: 300px;  /* Default larger image width */
+    height: 225px;  /* Default larger image height */
+    margin: 0 10px;
+    border-radius: 10px;
+}
+
+.center-text {
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Close Button Styling */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: black;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1100;  /* Ensure close button is above everything */
+}
+.close-btn:hover {
+    background-color: red;
+    color: white;
+}
+#video-container {
+    text-align: center;
+    margin-top: 20px;
+}
+#initial-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;  /* Ensure it overlays other elements */
+}
+
+#start-btn {
+    padding: 15px 30px;
+    font-size: 2em;
+    border-radius: 50px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#start-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
+#typewriter {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+    z-index: 1000;  /* Ensure it overlays the black screen */
+}
+
+@media (max-width: 768px) {
+    .top-carousel {
+        display: none;  /* Hide the top carousel on mobile */
+    }
+    .carousel-container {
+        height: 80vh;  /* Center the content vertically */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 50px;  /* Adjust padding to move images higher */
+    }
+    .carousel {
+        display: flex;  /* Ensure the carousel is in a single line */
+    }
+    .carousel img {
+        width: 400px;  /* Increase image size for smaller screens */
+        height: 300px;
+    }
+    h1 {
+        font-size: 2em;  /* Smaller heading on mobile */
+    }
+    button {
+        font-size: 1.2em;  /* Smaller button text */
+        padding: 8px 16px;
+    }
+}
